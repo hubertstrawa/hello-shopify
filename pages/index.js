@@ -16,13 +16,7 @@ class Index extends React.Component {
         onAction: () => this.setState({ open: true }),
       }}
       />
-      <ResourcePicker
-          resourceType="Product"
-          showVariants={false}
-          open={this.state.open}
-          onSelection={(resources) => this.handleSelection(resources)}
-          onCancel={() => this.setState({ open: false })}
-      />      
+      <h1>Test</h1>    
       <Layout>
         <EmptyState
           heading="Discount your products temporarily"
