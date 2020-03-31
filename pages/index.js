@@ -1,50 +1,18 @@
 import { TextStyle } from '@shopify/polaris';
 import { Page, EmptyState, Layout } from '@shopify/polaris';
 import { ResourcePicker, TitleBar } from '@shopify/app-bridge-react';
+import Link from 'next/link'
+import {useState} from 'react'
 
 const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
 
 class Index extends React.Component {
-  state = { open: false };
+  state = { open: false, text: '' };
   render() {
 
-    function downloadData(contentType,data,filename){
-      let link=document.createElement("A");
-      link.setAttribute("href",encodeURI("data:"+contentType+","+data));
-      link.setAttribute("style","display:none");
-      link.setAttribute("download",filename);
-      document.body.appendChild(link); //needed for firefox
-      console.log(link.outerHTML);
-      link.click();
-      setTimeout(function(){
-          document.body.removeChild(link);
-      },1000);
-   }
-   
-   function fromToXml(form){
-       let xmldata=['<?xml version="1.0"?>'];
-         xmldata.push("<form>");
-       let inputs=form.elements;
-       for(let i=0;i<inputs.length;i++){
-           let el=document.createElement("ELEMENT");
-         if (inputs[i].name){
-             el.setAttribute("name",inputs[i].name);
-           el.setAttribute("value",inputs[i].value);
-           xmldata.push(el.outerHTML);
-         }
-         
-       }
-       xmldata.push("</form>");
-       return xmldata.join("\n");
-   }
-   
-   
-   function download(frm){
-      let data=fromToXml(frm);
-     console.log(data);
-     
-     downloadData("text/xml",data,"export.xml");
-   }
+    handleChange = (event) => {
+      this.setState(({text: event.target.value}));
+    }
 
     return (
     <Page>
@@ -54,15 +22,11 @@ class Index extends React.Component {
         onAction: () => this.setState({ open: true }),
       }}
       />
-    <form action="" method="post" id="downloadForm">
-           <label for="firstname">First Name:</label>
-            <input type="text" name="firstname" id="firstname"/>
-    
-            <label for="lastName">Last Name:</label>
-            <input type="text" name="lastname" id="lastname"/>
-    
-        <button type="button" onClick={() => download(document.getElementById('downloadForm'))} id="submitButton">Download</button>
-    </form>    
+      <div>
+        <p>Enter your store</p>
+        <input type="text" value={this.state.text} onChange={this.handleChange}/><br/><br/>
+        <Link href={{ pathname: '/export', query: { shop: this.state.text } }}><a>click here</a></Link>
+      </div>   
       <Layout>
         <EmptyState
           heading="Discount your products temporarily"
