@@ -10,7 +10,7 @@ class Index extends React.Component {
   state = { open: false, text: '' };
   render() {
 
-    handleChange = (event) => {
+    const handleChange = (event) => {
       this.setState(({text: event.target.value}));
     }
 
