@@ -8,11 +8,12 @@ const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
 
 class Index extends React.Component {
   state = { open: false, text: '' };
-  render() {
 
-    const handleChange = (event) => {
-      this.setState(({text: event.target.value}));
-    }
+  handleChange = (event) => {
+    this.setState(({text: event.target.value}));
+  }
+  
+  render() {
 
     return (
     <Page>
